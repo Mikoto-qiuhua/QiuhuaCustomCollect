@@ -1,0 +1,11 @@
+name: QiuhuaCustomCollect
+main: org.qiuhua.qiuhuacustomcollect.Main
+version: 1.0.0
+api-version: 1.13
+depend:
+  - ItemsAdder
+softdepend:
+commands:
+  QiuhuaCustomCollect:
+    description: "主指令"
+    usage: /<command>
