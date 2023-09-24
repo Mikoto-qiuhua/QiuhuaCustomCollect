@@ -78,6 +78,10 @@ public class Config {
     }
 
 
+    public static Integer getStoragePeriod ()
+    {
+        return config.getInt("storagePeriod");
+    }
 
     public static YamlConfiguration load (File file)
     {
