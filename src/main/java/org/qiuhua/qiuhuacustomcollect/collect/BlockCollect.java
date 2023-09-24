@@ -1,13 +1,12 @@
 package org.qiuhua.qiuhuacustomcollect.collect;
 
 import dev.lone.itemsadder.api.Events.CustomBlockBreakEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.qiuhua.qiuhuacustomcollect.Config;
-import org.qiuhua.qiuhuacustomcollect.data.BlockDataController;
+import org.qiuhua.qiuhuacustomcollect.data.BlockData;
+import org.qiuhua.qiuhuacustomcollect.data.BlockDataManager;
 
-import java.util.List;
 import java.util.Map;
 
 public class BlockCollect {
@@ -26,7 +25,7 @@ public class BlockCollect {
             return;
         }
         Location loc = event.getBlock().getLocation();
-        BlockDataController.putBlockData(blockId, loc);
+        BlockDataManager.putBlockData(blockId, new BlockData(loc, System.currentTimeMillis()));
     }
 
     //判断是否是自定义方块

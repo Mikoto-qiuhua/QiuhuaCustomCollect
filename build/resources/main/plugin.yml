@@ -9,3 +9,6 @@ commands:
   QiuhuaCustomCollect:
     description: "主指令"
     usage: /<command>
+
+libraries:
+  - com.zaxxer:HikariCP:5.0.1

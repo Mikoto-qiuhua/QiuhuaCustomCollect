@@ -3,3 +3,12 @@
 CustomList:
   cavemineral:enhancedore1: 2
   cavemineral:enhancedore2: 1
+
+database:
+  enable: mysql
+  mysql:
+    jdbcUrl: jdbc:mysql://localhost:3306/mysqlminecraft
+    username: facered
+    password: 123sjh
+  sqlite:
+    jdbcUrl: jdbc:mysql://localhost:3306/mysqlminecraft

@@ -1,15 +1,12 @@
 package org.qiuhua.qiuhuacustomcollect;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,6 +15,10 @@ public class Config {
     private static FileConfiguration config;
 
     private static final Map<String, Long> customMap = new HashMap<>();
+
+    private static final Map<String, String> mysqlSettings = new HashMap<>();
+
+    private static final Map<String, String> sqliteSettings = new HashMap<>();
 
 
     public static void saveAllConfig(){
@@ -44,9 +45,38 @@ public class Config {
 
     }
 
+    public static Map<String, String> getMysqlSettingsToMap ()
+    {
+        ConfigurationSection mysqlDatabaseSection = config.getConfigurationSection("database.mysql");
+        if (mysqlDatabaseSection != null)
+        {
+            mysqlSettings.put ("jdbcUrl", mysqlDatabaseSection.getString("jdbcUrl"));
+            mysqlSettings.put ("username", mysqlDatabaseSection.getString("username"));
+            mysqlSettings.put ("password", mysqlDatabaseSection.getString("password"));
+        }
+        return mysqlSettings;
+    }
+
+    public static String getEnableSql ()
+    {
+        return config.getString("database.enable");
+    }
+
+    public static Map<String, String> getSqliteSettings ()
+    {
+        ConfigurationSection sqliteDatabaseSection = config.getConfigurationSection("database.mysql");
+        if (sqliteDatabaseSection != null)
+        {
+            mysqlSettings.put ("jdbcUrl", sqliteDatabaseSection.getString("jdbcUrl"));
+
+        }
+        return mysqlSettings;
+    }
+
     public static Map<String, Long> getCustomListMap(){
         return customMap;
     }
+
 
 
 
