@@ -3,7 +3,8 @@ package org.qiuhua.qiuhuacustomcollect;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.qiuhua.qiuhuacustomcollect.collect.BlockRefresh;
-import org.qiuhua.qiuhuacustomcollect.data.BlockDataController;
+import org.qiuhua.qiuhuacustomcollect.data.BlockDataManager;
+import org.qiuhua.qiuhuacustomcollect.database.BlockDataStorage;
 import org.qiuhua.qiuhuacustomcollect.event.PlayerListener;
 
 public class Main extends JavaPlugin {
@@ -24,12 +25,26 @@ public class Main extends JavaPlugin {
         //注册指令
         new QiuhuaCustomCollectCommand().register();
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, BlockRefresh::main, 20L, 20L);
+
+        BlockDataManager.getAllBlockData().clear();
+        BlockDataManager.getAllBlockData().putAll(BlockDataStorage.getBlockData());
+
     }
 
 
     //关闭时运行
     @Override
     public void onDisable(){
+
+        //创建表
+        BlockDataStorage.createBlockDataTable();
+
+        BlockDataManager.getAllBlockData().forEach((blockId, data) ->
+                data.forEach(blockData -> {
+                    System.out.println(blockData);
+                    BlockDataStorage.insertBlockData(blockId, blockData);
+                }
+                        ));
     }
 
     //执行重载命令时运行
