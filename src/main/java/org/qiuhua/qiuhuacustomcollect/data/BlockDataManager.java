@@ -2,7 +2,6 @@ package org.qiuhua.qiuhuacustomcollect.data;
 
 import org.qiuhua.qiuhuacustomcollect.Config;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -10,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class BlockDataManager {
 
     //全部方块数据
-    private static final Map<String, List<BlockData>> allBlockData = new ConcurrentHashMap<>();
+    private static final Map<String, CopyOnWriteArrayList<BlockData>> allBlockData = new ConcurrentHashMap<>();
 
     private static final Map<String, Long> configContainer = Config.getCustomListMap();
 
@@ -36,7 +35,7 @@ public class BlockDataManager {
     }
 
 
-    public static Map<String, List<BlockData>> getAllBlockData(){
+    public static Map<String, CopyOnWriteArrayList<BlockData>> getAllBlockData(){
         return allBlockData;
     }
 

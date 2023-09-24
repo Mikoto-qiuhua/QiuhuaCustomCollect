@@ -8,12 +8,13 @@ import org.qiuhua.qiuhuacustomcollect.data.BlockDataManager;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BlockRefresh {
 
     //异步的主要任务
     public static void main(){
-        Map<String, List<BlockData>> allBlockData = BlockDataManager.getAllBlockData();
+        Map<String, CopyOnWriteArrayList<BlockData>> allBlockData = BlockDataManager.getAllBlockData();
         for(String blockId : allBlockData.keySet()){
             List<BlockData> list = allBlockData.get(blockId);
             if(list.isEmpty()){

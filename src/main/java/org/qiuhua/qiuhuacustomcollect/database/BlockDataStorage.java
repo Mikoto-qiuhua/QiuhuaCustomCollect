@@ -8,14 +8,17 @@ import org.qiuhua.qiuhuacustomcollect.data.BlockData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BlockDataStorage
 {
     private final static SqlCreator creator = DefaultCreator.getCreator(Config.getEnableSql());
     public static void createBlockDataTable ()
     {
-        try (PreparedStatement statement = creator.getConnection().prepareStatement("create table if not exists `custom_block_data` (`blockId` varchar(32), `refreshTime` bigint(32), `world` varchar(10), `x` double(20,10), `y` double(20,10), `z` double(20,10) )charset=utf8;")) {
+        try (PreparedStatement statement = creator.getConnection().prepareStatement("create table if not exists `custom_block_data` (`blockId` varchar(32), refreshTime BigInt(20), world varchar(16), x int, y int, z int)charset=utf8;")) {
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("创建 block data 表失败....");
@@ -29,9 +32,9 @@ public class BlockDataStorage
             statement.setObject(1, blockId);
             statement.setObject(2, data.getRefreshTime());
             statement.setObject(3, Objects.requireNonNull(data.getLocation().getWorld()).getName());
-            statement.setObject(4, data.getLocation().getX());
-            statement.setObject(5, data.getLocation().getY());
-            statement.setObject(6, data.getLocation().getZ());
+            statement.setObject(4, ((Double)data.getLocation().getX()).intValue());
+            statement.setObject(5, ((Double)data.getLocation().getY()).intValue());
+            statement.setObject(6, ((Double)data.getLocation().getZ()).intValue());
             result = statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("插入 [blockId = " + blockId + "] 的操作失败了 数据是 [refreshTime = " + data.getRefreshTime() + "location = xyz (" + data.getLocation().getBlockX() + " , " + data.getLocation().getBlockY() + " , " + data.getLocation().getBlockZ() + ")]....");
@@ -41,9 +44,9 @@ public class BlockDataStorage
 
 
 
-    public static Map<String, List<BlockData>> getBlockData ()
+    public static Map<String, CopyOnWriteArrayList<BlockData>> getBlockData ()
     {
-        Map<String, List<BlockData>> result = new HashMap<>();
+        Map<String, CopyOnWriteArrayList<BlockData>> result = new HashMap<>();
 
 
         try (PreparedStatement statement = creator.getConnection().prepareStatement("select * from `custom_block_data`")) {
@@ -56,15 +59,15 @@ public class BlockDataStorage
 
                 if (!result.containsKey(id))
                 {
-                    result.put (id, new ArrayList<>());
+                    result.put (id, new CopyOnWriteArrayList());
                 }
 
                 long refreshTime = resultSet.getLong(2);
                 Location location = new Location (
                         Bukkit.getWorld (resultSet.getString (3)),
-                        resultSet.getDouble(4),
-                        resultSet.getDouble(5),
-                        resultSet.getDouble(6));
+                        ((Integer)resultSet.getInt(4)).doubleValue(),
+                        ((Integer)resultSet.getInt(5)).doubleValue(),
+                        ((Integer)resultSet.getInt(6)).doubleValue());
 
                 data.setRefreshTime(refreshTime);
                 data.setLocation(location);

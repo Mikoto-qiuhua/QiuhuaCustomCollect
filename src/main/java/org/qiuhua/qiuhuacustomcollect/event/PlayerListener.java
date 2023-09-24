@@ -11,6 +11,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onCustomBlockBreak(CustomBlockBreakEvent event){
+        System.out.println ("破坏的物品 =》  " + event.getCustomBlockItem().getItemMeta().getDisplayName());
         BlockCollect.main(event);
     }
 
