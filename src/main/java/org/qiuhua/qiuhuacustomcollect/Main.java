@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, BlockRefresh::main, 20L, 20L);
 
         BlockDataStorageService.enablePluginLoad();
-
+        BlockDataStorageService.enablePluginStartStorageTask ();
     }
 
 

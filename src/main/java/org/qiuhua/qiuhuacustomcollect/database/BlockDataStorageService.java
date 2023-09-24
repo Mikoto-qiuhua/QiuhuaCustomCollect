@@ -1,5 +1,8 @@
 package org.qiuhua.qiuhuacustomcollect.database;
 
+import org.bukkit.Bukkit;
+import org.qiuhua.qiuhuacustomcollect.Config;
+import org.qiuhua.qiuhuacustomcollect.Main;
 import org.qiuhua.qiuhuacustomcollect.data.BlockData;
 import org.qiuhua.qiuhuacustomcollect.data.BlockDataManager;
 
@@ -26,6 +29,23 @@ public class BlockDataStorageService
         BlockDataStorage.createBlockDataTable();
     }
 
+    /**
+     * 开启服务器时运行定时存储任务
+     */
+    public static void enablePluginStartStorageTask ()
+    {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getMainPlugin(), BlockDataStorageService::allBlockDataStorage, 1L, Config.getStoragePeriod() * 20 * 60);
+    }
+
+    public static void allBlockDataStorage ()
+    {
+        BlockDataStorage.deleteTable();
+        BlockDataStorage.createBlockDataTable();
+        Map<String, CopyOnWriteArrayList<BlockData>> allBlockData = BlockDataManager.getAllBlockData();
+        if (!allBlockData.isEmpty())
+            allBlockData.forEach((blockId, data) ->
+                    data.forEach(blockData -> BlockDataStorage.insertBlockData(blockId, blockData)));
+    }
 
     /**
      * 插件关闭时运行

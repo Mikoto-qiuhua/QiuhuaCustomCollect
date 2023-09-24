@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.qiuhua.qiuhuacustomcollect.Config;
 import org.qiuhua.qiuhuacustomcollect.data.BlockData;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ public class BlockDataStorage
     private final static SqlCreator creator = DefaultCreator.getCreator(Config.getEnableSql());
     public static void createBlockDataTable ()
     {
-        try (PreparedStatement statement = creator.getConnection().prepareStatement("create table if not exists `custom_block_data` (`blockId` varchar(32), refreshTime BigInt(20), world varchar(16), x int, y int, z int)charset=utf8;")) {
+        try (Connection connection = creator.getConnection(); PreparedStatement statement = connection.prepareStatement("create table if not exists `custom_block_data` (`blockId` varchar(32), refreshTime BigInt(20), world varchar(16), x int, y int, z int)charset=utf8;")) {
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("创建 block data 表失败....");
@@ -28,7 +29,7 @@ public class BlockDataStorage
     public static int insertBlockData (String blockId, BlockData data)
     {
         int result;
-        try (PreparedStatement statement = creator.getConnection().prepareStatement("insert into `custom_block_data` values(?, ?, ?, ?, ?, ?);")) {
+        try (Connection connection = creator.getConnection(); PreparedStatement statement = connection.prepareStatement("insert into `custom_block_data` values(?, ?, ?, ?, ?, ?);")) {
             statement.setObject(1, blockId);
             statement.setObject(2, data.getRefreshTime());
             statement.setObject(3, Objects.requireNonNull(data.getLocation().getWorld()).getName());
@@ -49,7 +50,7 @@ public class BlockDataStorage
         Map<String, CopyOnWriteArrayList<BlockData>> result = new HashMap<>();
 
 
-        try (PreparedStatement statement = creator.getConnection().prepareStatement("select * from `custom_block_data`")) {
+        try (Connection connection = creator.getConnection(); PreparedStatement statement = connection.prepareStatement("select * from `custom_block_data`")) {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next())
@@ -83,10 +84,10 @@ public class BlockDataStorage
 
     public static void deleteTable ()
     {
-        try (PreparedStatement statement = creator.getConnection().prepareStatement("drop table if exists `custom_block_data`;")) {
+        try (Connection connection = creator.getConnection(); PreparedStatement statement = connection.prepareStatement("drop table if exists `custom_block_data`;")) {
             statement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException("创建 block data 表失败....");
+            throw new RuntimeException("删除 block data 表失败....");
         }
     }
 }
