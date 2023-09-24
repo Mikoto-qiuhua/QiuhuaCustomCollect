@@ -12,3 +12,6 @@ database:
     password: 123sjh
   sqlite:
     jdbcUrl: jdbc:mysql://localhost:3306/mysqlminecraft
+
+# 定时存储的周期 分钟
+storagePeriod:

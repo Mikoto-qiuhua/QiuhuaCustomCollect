@@ -31,7 +31,7 @@ public class DefaultCreator implements SqlCreator
             config.setPassword(sqlSettings.get("password"));
         }else if ("sqlite".equalsIgnoreCase(type))
         {
-            sqlSettings = Config.getMysqlSettingsToMap();
+            sqlSettings = Config.getSqliteSettings();
             config.setJdbcUrl(sqlSettings.get("jdbcUrl"));
         }else
             throw new RuntimeException("配置 [enable = " + type + "] 必须 [mysql , sqlite] 其中之一....");

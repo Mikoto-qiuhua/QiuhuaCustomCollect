@@ -64,7 +64,7 @@ public class Config {
 
     public static Map<String, String> getSqliteSettings ()
     {
-        ConfigurationSection sqliteDatabaseSection = config.getConfigurationSection("database.mysql");
+        ConfigurationSection sqliteDatabaseSection = config.getConfigurationSection("database.sqlite");
         if (sqliteDatabaseSection != null)
         {
             mysqlSettings.put ("jdbcUrl", sqliteDatabaseSection.getString("jdbcUrl"));
@@ -76,7 +76,6 @@ public class Config {
     public static Map<String, Long> getCustomListMap(){
         return customMap;
     }
-
 
 
 
