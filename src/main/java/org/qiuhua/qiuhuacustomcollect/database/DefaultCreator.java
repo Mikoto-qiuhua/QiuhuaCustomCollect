@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class DefaultCreator implements SqlCreator
 {
-    private  DataSource dataSource;
+    private DataSource dataSource;
 
     private static SqlCreator creator;
     
@@ -39,6 +39,8 @@ public class DefaultCreator implements SqlCreator
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.setMaximumPoolSize(20);
+        config.setMinimumIdle(10);
         dataSource= new HikariDataSource(config);
     }
 
@@ -46,11 +48,11 @@ public class DefaultCreator implements SqlCreator
   
     public Connection getConnection ()
     {
-        Connection connection;
+        Connection connection = null;
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException("数据库链接失败.....");
+            e.printStackTrace();
         }
         return connection;
     }
