@@ -19,10 +19,11 @@ public class BlockDataStorage
     private final static SqlCreator creator = DefaultCreator.getCreator(Config.getEnableSql());
     public static void createBlockDataTable ()
     {
-        try (Connection connection = creator.getConnection(); PreparedStatement statement = connection.prepareStatement("create table if not exists `custom_block_data` (`blockId` varchar(32), refreshTime BigInt(20), world varchar(16), x int, y int, z int)charset=utf8;")) {
+        try (Connection connection = creator.getConnection(); PreparedStatement statement = connection.prepareStatement("create table if not exists `custom_block_data` (`blockId` varchar(32), refreshTime BigInt(20), world varchar(16), x int, y int, z int);")) {
             statement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException("创建 block data 表失败....");
+            e.printStackTrace();
+//            throw new RuntimeException("创建 block data 表失败....");
         }
     }
 

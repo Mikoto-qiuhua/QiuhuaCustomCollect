@@ -25,8 +25,7 @@ public class BlockDataStorageService
             BlockDataManager.getAllBlockData().putAll(databaseCache);
 
         //删除表 重新建一个什么都没的表
-        BlockDataStorage.deleteTable();
-        BlockDataStorage.createBlockDataTable();
+        clearDatabase ();
     }
 
     /**
@@ -39,12 +38,17 @@ public class BlockDataStorageService
 
     public static void allBlockDataStorage ()
     {
-        BlockDataStorage.deleteTable();
-        BlockDataStorage.createBlockDataTable();
+        clearDatabase ();
         Map<String, CopyOnWriteArrayList<BlockData>> allBlockData = BlockDataManager.getAllBlockData();
         if (!allBlockData.isEmpty())
             allBlockData.forEach((blockId, data) ->
                     data.forEach(blockData -> BlockDataStorage.insertBlockData(blockId, blockData)));
+    }
+
+    public static void clearDatabase ()
+    {
+        BlockDataStorage.deleteTable();
+        BlockDataStorage.createBlockDataTable();
     }
 
     /**
@@ -52,7 +56,7 @@ public class BlockDataStorageService
      */
     public static void disablePluginStorage ()
     {
-
+        clearDatabase();
         BlockDataManager.getAllBlockData().forEach((blockId, data) ->
                 data.forEach(blockData -> {
                     BlockDataStorage.insertBlockData(blockId, blockData);
