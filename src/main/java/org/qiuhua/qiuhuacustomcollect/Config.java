@@ -64,12 +64,8 @@ public class Config {
 
     public static Map<String, String> getSqliteSettings ()
     {
-        ConfigurationSection sqliteDatabaseSection = config.getConfigurationSection("database.sqlite");
-        if (sqliteDatabaseSection != null)
-        {
-            mysqlSettings.put ("jdbcUrl", sqliteDatabaseSection.getString("jdbcUrl"));
+        mysqlSettings.put ("jdbcUrl", "jdbc:sqlite:" + Main.getMainPlugin().getDataFolder().getPath() + "\\blockData.db");
 
-        }
         return mysqlSettings;
     }
 
