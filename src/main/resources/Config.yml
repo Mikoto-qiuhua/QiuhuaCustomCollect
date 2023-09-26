@@ -1,17 +1,15 @@
-#会自动生成的方块列表
 #会自动生成的方块列表   命名空间: 刷新间隔 单位分钟
 CustomList:
-  cavemineral:enhancedore1: 2
-  cavemineral:enhancedore2: 1
+  cavemineral:enhancedore1: 10
+  cavemineral:enhancedore2: 10
+  cavemineral:enhancedore3: 10
 
 database:
-  enable: mysql
+  enable: sqlite
   mysql:
     jdbcUrl: jdbc:mysql://localhost:3306/mysqlminecraft
     username: facered
     password: 123sjh
-  sqlite:
-    jdbcUrl: jdbc:mysql://localhost:3306/mysqlminecraft
 
-# 定时存储的周期 分钟
-storagePeriod: 1
+#定时存储和刷新方块检查的间隔  单位分钟
+storagePeriod: 5

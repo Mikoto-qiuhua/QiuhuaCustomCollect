@@ -23,10 +23,9 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         //注册指令
         new QiuhuaCustomCollectCommand().register();
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, BlockRefresh::main, 20L, 20L);
-
         BlockDataStorageService.enablePluginLoad();
-        BlockDataStorageService.enablePluginStartStorageTask ();
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, BlockRefresh::main, Config.getStoragePeriod() * 20 * 60, Config.getStoragePeriod() * 20 * 60);
+//        BlockDataStorageService.enablePluginStartStorageTask ();
     }
 
 

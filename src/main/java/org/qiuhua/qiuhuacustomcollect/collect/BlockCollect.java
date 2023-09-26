@@ -1,6 +1,7 @@
 package org.qiuhua.qiuhuacustomcollect.collect;
 
 import dev.lone.itemsadder.api.Events.CustomBlockBreakEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.qiuhua.qiuhuacustomcollect.Config;
@@ -32,7 +33,9 @@ public class BlockCollect {
     public static boolean isCustomBlock(String blockId){
         if(blockId != null) {
             Map<String, Long> map = Config.getCustomListMap();
+//            Bukkit.getConsoleSender().sendMessage("记录方块1 " + blockId);
             if(map.containsKey(blockId)){
+//                Bukkit.getConsoleSender().sendMessage("记录方块 " + blockId);
                 return true;
             }
         }

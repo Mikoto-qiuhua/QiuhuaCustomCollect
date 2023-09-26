@@ -64,9 +64,9 @@ public class Config {
 
     public static Map<String, String> getSqliteSettings ()
     {
-        mysqlSettings.put ("jdbcUrl", "jdbc:sqlite:" + Main.getMainPlugin().getDataFolder().getPath() + "\\blockData.db");
+        sqliteSettings.put ("jdbcUrl", "jdbc:sqlite:" + Main.getMainPlugin().getDataFolder().getPath() + "\\blockData.db");
 
-        return mysqlSettings;
+        return sqliteSettings;
     }
 
     public static Map<String, Long> getCustomListMap(){

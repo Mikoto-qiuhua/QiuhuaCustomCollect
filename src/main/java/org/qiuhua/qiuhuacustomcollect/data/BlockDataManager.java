@@ -1,5 +1,6 @@
 package org.qiuhua.qiuhuacustomcollect.data;
 
+import org.bukkit.Bukkit;
 import org.qiuhua.qiuhuacustomcollect.Config;
 
 import java.util.Map;
@@ -30,8 +31,9 @@ public class BlockDataManager {
         Long refreshInterval = configContainer.get(blockId);
         //data被创建时获取的当前毫秒数 + 间隔时间
         data.offsetRefreshTime(refreshInterval);
-
+//        Bukkit.getConsoleSender().sendMessage("记录方块 " + blockId);
         allBlockData.get (blockId).add(data);
+//        System.out.println ("记录方块 =》  " + blockId);
     }
 
 

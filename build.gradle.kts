@@ -29,7 +29,7 @@ tasks.getByName<Test>("test") {
 }
 tasks.withType<Jar>().configureEach {
     archiveFileName.set("QiuhuaCustomCollect-测试插件.jar")
-    destinationDirectory.set(File ("F:\\mc\\mcPaperServer\\plugins"))
+    destinationDirectory.set(File ("D:\\Server-提瓦特世界\\plugins"))
 }
 
 tasks.withType<JavaCompile>{

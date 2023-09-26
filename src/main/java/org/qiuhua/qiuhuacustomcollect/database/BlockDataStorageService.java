@@ -20,6 +20,7 @@ public class BlockDataStorageService
         BlockDataStorage.createBlockDataTable();
         //从数据库中获取所有的方块信息
         Map<String, CopyOnWriteArrayList<BlockData>> databaseCache = BlockDataStorage.getBlockData();
+        Main.getMainPlugin().getLogger().info("加载已存储的方块数据.........");
         //如果它是 empty 说明没有需要刷新的自定义方块
         if (!databaseCache.isEmpty())
             BlockDataManager.getAllBlockData().putAll(databaseCache);
@@ -40,6 +41,7 @@ public class BlockDataStorageService
     {
         clearDatabase ();
         Map<String, CopyOnWriteArrayList<BlockData>> allBlockData = BlockDataManager.getAllBlockData();
+        Main.getMainPlugin().getLogger().info("开始保存刷新方块数据.........");
         if (!allBlockData.isEmpty())
             allBlockData.forEach((blockId, data) ->
                     data.forEach(blockData -> BlockDataStorage.insertBlockData(blockId, blockData)));
@@ -57,6 +59,7 @@ public class BlockDataStorageService
     public static void disablePluginStorage ()
     {
         clearDatabase();
+        Main.getMainPlugin().getLogger().info("开始保存刷新方块数据.........");
         BlockDataManager.getAllBlockData().forEach((blockId, data) ->
                 data.forEach(blockData -> {
                     BlockDataStorage.insertBlockData(blockId, blockData);
